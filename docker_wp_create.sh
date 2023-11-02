@@ -10,7 +10,7 @@ if [ ! -d "$directory" ]; then
 fi
 
 # Copy .zip and installer.php files from the script directory to the "wordpress_docker" directory
-cp ./* "$directory"
+cp ./* "$directory"  > /dev/null 2>&1
 
 
 # Change to the "wordpress_docker" directory
