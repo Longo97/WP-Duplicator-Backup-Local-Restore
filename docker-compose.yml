@@ -1,0 +1,38 @@
+version: '3'
+services:
+   db:
+     image: mariadb
+     ports:
+       - "3306:3306"
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: admin
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: admin
+       MYSQL_PASSWORD: admin
+   pma:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: admin
+    ports:
+      - 8080:80
+    links:
+      - db:db
+   wordpress:
+     depends_on:
+       - db
+     image: wordpress:latest
+     ports:
+       - "8000:80"
+     restart: always
+     volumes:
+       - .:/var/www/html/
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: admin
+       WORDPRESS_DB_PASSWORD: admin
+volumes:
+  db_data:
+
