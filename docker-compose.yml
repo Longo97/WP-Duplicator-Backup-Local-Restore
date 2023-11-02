@@ -6,18 +6,18 @@ services:
        - "3306:3306"
      restart: always
      environment:
-       MYSQL_ROOT_PASSWORD: admin
+       MYSQL_ROOT_PASSWORD: ${mySqlRootPassword}
        MYSQL_DATABASE: wordpress
-       MYSQL_USER: admin
-       MYSQL_PASSWORD: admin
+       MYSQL_USER: ${mySqlUser}
+       MYSQL_PASSWORD: ${mySqlPassword}
    pma:
     image: phpmyadmin/phpmyadmin
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: ${mySqlRootPassword}
     ports:
-      - 8080:80
+      - 8080:${internalPort}
     links:
       - db:db
    wordpress:
@@ -25,14 +25,14 @@ services:
        - db
      image: wordpress:latest
      ports:
-       - "8000:80"
+       - "${externalPort}:${internalPort}"
      restart: always
      volumes:
        - .:/var/www/html/
      environment:
        WORDPRESS_DB_HOST: db:3306
-       WORDPRESS_DB_USER: admin
-       WORDPRESS_DB_PASSWORD: admin
+       WORDPRESS_DB_USER: ${mySqlUser}
+       WORDPRESS_DB_PASSWORD: ${mySqlPassword}
 volumes:
   db_data:
 

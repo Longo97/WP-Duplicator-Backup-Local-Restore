@@ -17,7 +17,7 @@ cp ./* "$directory"  > /dev/null 2>&1
 cd "$directory" || exit 1
 
 # Run the docker-compose command
-docker-compose up -d
+source create_config.sh
 
 # Wait for the server to start
 echo "Waiting for the server to start..."
