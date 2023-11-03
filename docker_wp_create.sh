@@ -36,7 +36,7 @@ while ! curl -s http://localhost:8000/installer.php -o /dev/null; do
 done
 
 # Delete all files except .zip and installer.php
-find . ! -name "*.zip" ! -name "installer.php" ! -name "dup-installer.*" -type f -delete
+find . ! -name "*.zip" ! -name "installer.php" ! -name "dup-*.*" -type f -delete
 
 # Determine the OS and open the installer.php page in the default web browser
 case "$(uname -s)" in
