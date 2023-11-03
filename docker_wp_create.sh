@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Setup files for installation
+cp "$(dirname "$0")/Source"/* "Projects/"
+
+cp *.sh *.yml "Projects/"
+
+cd "Projects"
+
 # Prompt the user to enter a name for the directory
 echo -n "Enter a name for the directory: "
 read directory
@@ -9,11 +16,10 @@ if [ ! -d "$directory" ]; then
   mkdir "$directory"
 fi
 
-# Copy .zip and installer.php files from the script directory to the "wordpress_docker" directory
-cp ./* "$directory"  > /dev/null 2>&1
+# Copy .zip and installer.php files from the script directory to the project directory
+cp *.sh *.yml *.zip *.php "$directory"  > /dev/null 2>&1
 
-
-# Change to the "wordpress_docker" directory
+# Change to the project directory
 cd "$directory" || exit 1
 
 # Run the docker-compose command
@@ -26,7 +32,7 @@ while ! curl -s http://localhost:8000/installer.php -o /dev/null; do
 done
 
 # Delete all files except .zip and installer.php
-find . ! -name "*.zip" ! -name "installer.php" -type f -delete
+find . ! -name "*.zip" ! -name "installer.php" ! -name "dup-installer.*" -type f -delete
 
 # Determine the OS and open the installer.php page in the default web browser
 case "$(uname -s)" in
@@ -42,3 +48,8 @@ case "$(uname -s)" in
 esac
 
 echo "Now you can continue with a clean installation of the Duplicator backup"
+
+cd ..
+
+# Delete the files only required during installation
+find "$(dirname "$0")" -maxdepth 1 -type f -exec rm {} \;
