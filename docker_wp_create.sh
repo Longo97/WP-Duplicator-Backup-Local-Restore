@@ -5,6 +5,10 @@ cp "$(dirname "$0")/Source"/* "Projects/"
 
 cp *.sh *.yml "Projects/"
 
+if [ ! -d "Projects" ]; then
+  mkdir "Projects"
+fi
+
 cd "Projects"
 
 # Prompt the user to enter a name for the directory
