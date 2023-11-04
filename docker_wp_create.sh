@@ -1,13 +1,13 @@
 #!/bin/bash
 
+if [ ! -d "Projects" ]; then
+  mkdir "Projects"
+fi
+
 # Setup files for installation
 cp "$(dirname "$0")/Source"/* "Projects/"
 
 cp *.sh *.yml "Projects/"
-
-if [ ! -d "Projects" ]; then
-  mkdir "Projects"
-fi
 
 cd "Projects"
 
@@ -15,7 +15,6 @@ cd "Projects"
 echo -n "Enter a name for the directory: "
 read directory
 
-# Create a directory named "wordpress_docker" if it doesn't exist
 if [ ! -d "$directory" ]; then
   mkdir "$directory"
 fi
