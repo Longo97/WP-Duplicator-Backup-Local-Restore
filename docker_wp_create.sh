@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Check if backup files exist
+source check_backup_exists.sh "Source" || return
+
 if [ ! -d "Projects" ]; then
   mkdir "Projects"
 fi
@@ -25,30 +28,7 @@ cp *.sh *.yml *.zip *.php "$directory"  > /dev/null 2>&1
 # Change to the project directory
 cd "$directory" || exit 1
 
-# Run the docker-compose command
-source create_config.sh
-
-# Wait for the server to start
-echo "Waiting for the server to start..."
-while ! curl -s http://localhost:8000/installer.php -o /dev/null; do
-  sleep 1
-done
-
-# Delete all files except .zip and installer.php
-find . ! -name "*.zip" ! -name "installer.php" ! -name "dup-*.*" -type f -delete
-
-# Determine the OS and open the installer.php page in the default web browser
-case "$(uname -s)" in
-  Linux*)  # Linux
-    xdg-open "http://localhost:8000/installer.php"
-    ;;
-  Darwin*)  # macOS
-    open "http://localhost:8000/installer.php"
-    ;;
-  *)
-    echo "Unsupported operating system"
-    ;;
-esac
+source create_server.sh
 
 echo "Now you can continue with a clean installation of the Duplicator backup"
 
