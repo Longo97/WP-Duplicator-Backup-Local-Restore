@@ -58,8 +58,6 @@ while ! curl -s http://localhost:$externalPort/installer.php -o /dev/null; do
   sleep 1
 done
 
-# Delete all files except .zip and installer.php
-find . ! -name "*.zip" ! -name "installer.php" ! -name "dup-*.*" -type f -delete
 
 # Determine the OS and open the installer.php page in the default web browser
 case "$(uname -s)" in
