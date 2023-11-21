@@ -26,6 +26,7 @@ services:
      image: wordpress:latest
      ports:
        - "${externalPort}:${internalPort}"
+       - "443:443"
      restart: always
      volumes:
        - .:/var/www/html/
