@@ -4,7 +4,7 @@ if [ ! -d "Projects" ]; then
   mkdir "Projects"
 fi
 
-cp *.sh *.yml "Projects/"
+cp Code/* "Projects/"
 
 cd "Projects"
 
@@ -29,4 +29,4 @@ echo "Now you can continue with a clean installation of your wordpress site"
 cd ..
 
 # Delete the files only required during installation
-find "$(dirname "$0")" -maxdepth 1 -type f -exec rm {} \;
+find . -maxdepth 1 -type f -exec rm {} \;

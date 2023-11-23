@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # Check if backup files exist
-source check_backup_exists.sh "Source" || return
+source Code/check_backup_exists.sh "Source" || return
 
 if [ ! -d "Projects" ]; then
   mkdir "Projects"
 fi
 
 # Setup files for installation
-cp "$(dirname "$0")/Source"/* "Projects/"
+cp "Source"/* "Projects/"
 
-cp *.sh *.yml "Projects/"
+cp "Code"/* "Projects/"
 
 cd "Projects"
 
@@ -35,4 +35,4 @@ echo "Now you can continue with a clean installation of the Duplicator backup"
 cd ..
 
 # Delete the files only required during installation
-find "$(dirname "$0")" -maxdepth 1 -type f -exec rm {} \;
+find . -maxdepth 1 -type f -exec rm {} \;
